@@ -1,0 +1,22 @@
+[alias]
+ci = commit -v
+st = status -sb
+co = checkout
+b = branch
+pub = !git push --set-upstream origin $(git branch | awk '/^\\*/ { print $2 }')
+del = !git status -s | awk '/^ D/ { print $2 }' | xargs git rm
+lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+squash = !git rebase -i $(git merge-base HEAD master)
+
+[color]
+ui = auto
+
+[core]
+editor = vim
+filemode = false
+
+[push]
+default = upstream
+
+[branch]
+autosetuprebase = always
