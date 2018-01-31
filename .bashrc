@@ -1,9 +1,5 @@
-function host_or_branch() {
-    branch=$(__git_ps1)
-    if [ -z "$branch" ]; then
-        echo $(hostname)
-    else
-        echo $branch
-    fi
+# Show Git branch in prompt
+parse_git_branch() {
+    git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
 }
-PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@$(host_or_branch)\[\033[01;34m\] \w \$\[\033[00m\] '
+export PS1="\u@\h \W\[\033[32m\]\$(parse_git_branch)\[\033[00m\] $ "
